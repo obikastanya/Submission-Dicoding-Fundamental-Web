@@ -1,0 +1,9 @@
+1. npm init
+2. Install webpack (webpack, webpack-cli) sebagai dev. install webpack --save-dev
+3. setting script build for webpack, jalankan build dan dapatkan output webpack berupa folder dist
+4. Connecting the API's
+5. Add webpack config to prepare installing bootstrap
+6. add css and style loader
+7. install popper.js, bootstrap, and jquery
+
+
