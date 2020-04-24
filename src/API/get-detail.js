@@ -1,5 +1,5 @@
 const searchSubmit = document.querySelector("#searchSubmit");
-searchSubmit.addEventListener('click', (event) => {
+searchSubmit.addEventListener('click', () => {
     let keyword = document.getElementById('search').value;
     const baseURLSearch = `https://api.themoviedb.org/3/search/movie?api_key=bbb235f9dfd28f9bcb6dfa24d42f290f&language=en-US&query=${keyword}=2&include_adult=false`;
     fetch(baseURLSearch)
@@ -34,7 +34,6 @@ function notFound() {
         <span class="span-not-found">
         <h1 class="not-found text-secondary">Movies Not Found</span></h1>
         </span>
-    
     `;
 }
 function cetakDetail(details) {
@@ -77,5 +76,4 @@ function cetakDetail(details) {
         </div>
         `
     }
-
 }

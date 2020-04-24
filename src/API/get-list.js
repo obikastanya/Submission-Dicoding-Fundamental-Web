@@ -7,6 +7,7 @@ function getlist() {
         })
         .then(responseJson => {
             cetak(responseJson.results);
+            detailMovie(responseJson.results);
         })
         .catch(error => {
             console.log(error)
@@ -21,7 +22,8 @@ function cetak(movies) {
     content.innerHTML += ` 
         <style> 
     .image-card{
-        height: 60%
+        height: 60%;
+        cursor: pointer;
     }
 .card{
     margin: 0 0 30% 0;
@@ -39,7 +41,7 @@ function cetak(movies) {
         content.innerHTML += ` 
         <div class="col-sm-3">
         <div class="card" style="width: 17.5rem;">
-        <img class="image-card" src="${baseURLImage}${movie.poster_path}" alt="gambar"/>
+        <img class="image-card" src="${baseURLImage}${movie.poster_path}" alt="${movie.id}"/>
             <div class="card-body">
                 <h5 class="card-title">${movie.original_title}</h5>
                 <p><strong>Popularity : ${movie.popularity}</strong></p>
@@ -54,3 +56,77 @@ function cetak(movies) {
 // back to home
 const home = document.getElementById('gohome');
 home.addEventListener('click', getlist);
+function detailMovie(detail) {
+    const baseURLImage = `https://image.tmdb.org/t/p/w500/`;
+    const content = document.querySelector("#content");
+    const cards = document.querySelectorAll(".image-card");
+    console.log(cards);
+    for (card of cards) {
+        card.addEventListener('click', event => {
+            content.innerHTML = `<style>
+            .container{
+                display: flex;
+                flex-direction: row;
+            }
+            .section1{
+                flex-basis: 60%;
+            }
+            .section2{
+                flex-basis: 40%;
+            }
+            </style> `;
+            // logic, get id movies
+            let imgSelected = event.target;
+            imgSelected = imgSelected.alt;
+            for (detil of detail) {
+                if (detil.id == imgSelected) {
+                    content.innerHTML += `
+                <div class="col-sm-12">
+                <div class="jumbotron jumbotron-fluid">
+                <div class="container">
+                <section class="section1">
+                    <img src="${baseURLImage}${detil.poster_path}" alt="${detil.id}"/>
+                </section>
+                <section class="section2">
+                        <table class="table table-borderless">
+                        <tbody>
+                        <tr>
+                            <td>Title  </td>
+                            <td><strong> ${detil.original_title}</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Popularity  </td>
+                            <td>${detil.popularity}</td>
+                        </tr>
+                        <tr>
+                            <td>Vote Count  </td>
+                            <td>${detil.vote_count}</td>
+                        </tr>
+                        <tr>
+                            <td>Genre  </td>
+                            <td>...</td>
+                        </tr>
+                        <tr>
+                            <td>Release Date  </td>
+                            <td>${detil.release_date}</td>
+                        </tr>
+                        <tr>
+                            <td>Overview </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">${detil.overview}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </section>
+                </div>
+                </div>
+            </div>
+            `;
+                }
+            }
+            // end logic
+
+        });
+    }
+}
