@@ -3,21 +3,42 @@ searchSubmit.addEventListener('click', (event) => {
     let keyword = document.getElementById('search').value;
     const baseURLSearch = `https://api.themoviedb.org/3/search/movie?api_key=bbb235f9dfd28f9bcb6dfa24d42f290f&language=en-US&query=${keyword}=2&include_adult=false`;
     fetch(baseURLSearch)
-
         .then(response => {
             return response.json()
         })
         .then(responJson => {
-            cetakDetail(responJson.results);
+            if (responJson.results.length > 0) {
+                cetakDetail(responJson.results)
+            }
+            else {
+                notFound();
+            }
         })
         .catch(error => {
             console.log(error)
         })
 });
-
+const content = document.querySelector("#content");
+function notFound() {
+    content.innerHTML = `
+    <style>
+    .not-found{
+        text-align:center;
+    }
+    .span-not-found{
+        padding-top: 100px;
+        margin:auto!important;
+    }
+    </style>`;
+    content.innerHTML += `
+        <span class="span-not-found">
+        <h1 class="not-found text-secondary">Movies Not Found</span></h1>
+        </span>
+    
+    `;
+}
 function cetakDetail(details) {
     const baseURLImage = `https://image.tmdb.org/t/p/w500/`;
-    const content = document.querySelector("#content");
     content.innerHTML = `
 <style> 
     .image-card{
