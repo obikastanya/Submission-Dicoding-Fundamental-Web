@@ -35,12 +35,15 @@ function cetak(movies) {
     text-align: justify;
     padding: 5%;
         }
+        .col-sm-3{
+             padding: 0px;
+        }
         </style>`
         ;
     for (movie of movies) {
         content.innerHTML += ` 
         <div class="col-sm-3">
-        <div class="card" style="width: 17.5rem;">
+        <div class="card" style="width: 100%;">
         <img class="image-card" src="${baseURLImage}${movie.poster_path}" alt="${movie.id}"/>
             <div class="card-body">
                 <h5 class="card-title">${movie.original_title}</h5>
@@ -56,11 +59,12 @@ function cetak(movies) {
 // back to home
 const home = document.getElementById('gohome');
 home.addEventListener('click', getlist);
+
+
 function detailMovie(detail) {
     const baseURLImage = `https://image.tmdb.org/t/p/w500/`;
     const content = document.querySelector("#content");
     const cards = document.querySelectorAll(".image-card");
-    console.log(cards);
     for (card of cards) {
         card.addEventListener('click', event => {
             content.innerHTML = `<style>
@@ -73,6 +77,9 @@ function detailMovie(detail) {
             }
             .section2{
                 flex-basis: 40%;
+            }
+            .overview{
+                text-indent: 5em;
             }
             </style> `;
             // logic, get id movies
@@ -104,7 +111,7 @@ function detailMovie(detail) {
                         </tr>
                         <tr>
                             <td>Genre  </td>
-                            <td>...</td>
+                            <td ><ul id="genre"></ul></td >
                         </tr>
                         <tr>
                             <td>Release Date  </td>
@@ -114,7 +121,7 @@ function detailMovie(detail) {
                             <td>Overview </td>
                         </tr>
                         <tr>
-                            <td colspan="2">${detil.overview}</td>
+                            <td colspan="2" ><p class="text-justify overview">${detil.overview}</p></td>
                         </tr>
                         </tbody>
                     </table>
@@ -123,10 +130,33 @@ function detailMovie(detail) {
                 </div>
             </div>
             `;
+                    getGenre(detil.genre_ids);
                 }
             }
             // end logic
 
         });
     }
+}
+
+// new
+function getGenre(genre_ids) {
+    let genreMovie = document.getElementById('genre');
+    fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=bbb235f9dfd28f9bcb6dfa24d42f290f&language=en-US`)
+        .then(response => {
+            return response.json()
+        })
+        .then(responseJson => {
+            for (genre of responseJson.genres) {
+                for (genreid of genre_ids) {
+                    if (genreid == genre.id) {
+                        // genreMovie.push(genre.name);
+                        genreMovie.innerHTML += `<li> ${genre.name} </li>`;
+                    }
+                }
+            }
+        })
+        .catch(error => {
+            console.log(error)
+        })
 }

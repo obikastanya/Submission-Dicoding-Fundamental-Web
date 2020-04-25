@@ -4,6 +4,7 @@ class Navbar extends HTMLElement {
         <style>
         .navbar{
             background-color: #3a86ff;
+            height: 7em;
         }
         #navbarSupportedContent{
             margin-left:45%;
@@ -28,7 +29,7 @@ class Navbar extends HTMLElement {
         }
         
         </style>
-        <nav class="navbar navbar-expand-lg ">
+        <nav class="navbar navbar-expand-lg sticky-top">
         <a class="navbar-brand" id="gohome" href="">Maniac Popcorn</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">

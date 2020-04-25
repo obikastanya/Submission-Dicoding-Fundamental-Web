@@ -1,22 +1,26 @@
 const searchSubmit = document.querySelector("#searchSubmit");
 searchSubmit.addEventListener('click', () => {
     let keyword = document.getElementById('search').value;
-    const baseURLSearch = `https://api.themoviedb.org/3/search/movie?api_key=bbb235f9dfd28f9bcb6dfa24d42f290f&language=en-US&query=${keyword}=2&include_adult=false`;
-    fetch(baseURLSearch)
-        .then(response => {
-            return response.json()
-        })
-        .then(responJson => {
-            if (responJson.results.length > 0) {
-                cetakDetail(responJson.results)
-            }
-            else {
-                notFound();
-            }
-        })
-        .catch(error => {
-            console.log(error)
-        })
+    if (keyword) {
+        const baseURLSearch = `https://api.themoviedb.org/3/search/movie?api_key=bbb235f9dfd28f9bcb6dfa24d42f290f&language=en-US&query=${keyword}=2&include_adult=false`;
+        fetch(baseURLSearch)
+            .then(response => {
+                return response.json()
+            })
+            .then(responJson => {
+                if (responJson.results.length > 0) {
+                    cetakDetail(responJson.results);
+                    detailMovie(responJson.results);
+                }
+                else {
+                    notFound();
+                }
+
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }
 });
 const content = document.querySelector("#content");
 function notFound() {
@@ -42,7 +46,8 @@ function cetakDetail(details) {
 <style> 
     .image-card{
         height: 750px!important;
-        width:280px;
+        100%;
+        cursor: pointer;
     }
 .card{
     margin: 0 0 30% 0;
@@ -54,10 +59,13 @@ function cetakDetail(details) {
     text-align: justify;
     padding: 5%;
         }
+        .col-sm-3{
+            padding: 0px;
+       }
         </style>
     `;
     for (detail of details) {
-        console.log(detail.original_title);
+        // console.log(detail.original_title);
         let image = '';
         if (detail.poster_path) {
             image = `${baseURLImage}${detail.poster_path}`
@@ -67,13 +75,113 @@ function cetakDetail(details) {
         }
         content.innerHTML += `
         <div class="col-sm-3">
-        <div class="card" style="width: 17.5rem;">
-        <img class="image-card" src="${image}" alt="logo"/>
+        <div class="card" style="width:100%">
+            <img class="image-card" src="${image}" alt="${detail.id}"/>
             <div class="card-body">
-            <h1>${detail.original_title}<h1>  
+            <h5 class="card-title">${detail.original_title}</h5>
             </div>
             </div>
         </div>
         `
     }
 }
+function getGenre(genre_ids) {
+    let genreMovie = document.getElementById('genre');
+    fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=bbb235f9dfd28f9bcb6dfa24d42f290f&language=en-US`)
+        .then(response => {
+            return response.json()
+        })
+        .then(responseJson => {
+            for (genre of responseJson.genres) {
+                for (genreid of genre_ids) {
+                    if (genreid == genre.id) {
+                        // genreMovie.push(genre.name);
+                        genreMovie.innerHTML += `<li> ${genre.name} </li>`;
+                    }
+                }
+            }
+        })
+        .catch(error => {
+            console.log(error)
+        })
+}
+// new
+function detailMovie(detail) {
+    const baseURLImage = `https://image.tmdb.org/t/p/w500/`;
+    const content = document.querySelector("#content");
+    const cards = document.querySelectorAll(".image-card");
+    // console.log(cards);
+    for (card of cards) {
+        card.addEventListener('click', event => {
+            content.innerHTML = `<style>
+            .container{
+                display: flex;
+                flex-direction: row;
+            }
+            .section1{
+                flex-basis: 60%;
+            }
+            .section2{
+                flex-basis: 40%;
+            }
+            .overview{
+                text-indent: 5em;
+            }
+            </style> `;
+            // logic, get id and genre movies
+            let imgSelected = event.target;
+            imgSelected = imgSelected.alt;
+            for (detil of detail) {
+                if (detil.id == imgSelected) {
+                    content.innerHTML += `
+                <div class="col-sm-12">
+                    <div class="jumbotron jumbotron-fluid">
+                    <div class="container">
+                <section class="section1">
+                    <img src="${baseURLImage}${detil.poster_path}" alt="${detil.id}"/>
+                </section>
+                <section class="section2">
+                        <table class="table table-borderless">
+                        <tbody>
+                        <tr>
+                            <td>Title  </td>
+                            <td><strong> ${detil.original_title}</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Popularity  </td>
+                            <td>${detil.popularity}</td>
+                        </tr>
+                        <tr>
+                            <td>Vote Count  </td>
+                            <td>${detil.vote_count}</td>
+                        </tr>
+                        <tr>
+                            <td>Genre  </td>
+                            <td ><ul id="genre"></ul></td >
+                        </tr >
+                            <tr>
+                                <td>Release Date  </td>
+                                <td>${detil.release_date}</td>
+                            </tr>
+                        <tr>
+                            <td>Overview </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><p  class="text-justify overview">${detil.overview}</p></td>
+                        </tr>
+                        </tbody >
+                    </table >
+                </section >
+                </div >
+                </div >
+            </div >
+        `;
+                    getGenre(detil.genre_ids);
+                }
+            }
+            // end logic
+
+        });
+    }
+}
+
