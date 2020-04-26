@@ -11,6 +11,7 @@ class Navbar extends HTMLElement {
         }
         .navbar-brand:hover{
             color:white;
+            transition: 0.8s;
         }
         .navbar-brand{
             color:#ffbe0b;
@@ -26,6 +27,7 @@ class Navbar extends HTMLElement {
             border: 1px solid #ffbe0b;
             color: #ffbe0b;
             background-color: white;
+            transition: 0.8s;
         }
         
         </style>
@@ -36,11 +38,10 @@ class Navbar extends HTMLElement {
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <input id="search" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <input id="search" class="form-control mr-sm-2" type="search" placeholder="Find Another Movies Here!" aria-label="Search">
                     <button id="searchSubmit" class="btn my-2 my-sm-0" type="submit">Search</button>
         </div>
     </nav>`;
     }
 }
-
 customElements.define("nav-bar", Navbar);

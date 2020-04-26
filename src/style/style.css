@@ -1,5 +1,40 @@
 .card-body{
     overflow: hidden;
-    height: 40%;
-    
+    height: 40%;    
+}
+.card-body:hover{
+    transition: 1s;
+    cursor: default;
+}
+#content{
+    margin: 0px 2px 0px 2px;
+}
+.card:hover{
+    transform: translate(0, 10px);
+    transition: 0.9s;
+}
+.image-card:hover{
+    opacity: 0.8; 
+    transition: 0.2s;  
+}
+#genre{
+list-style-type:none;
+padding: 0px;
+}
+.jumbotron{
+    background-color: white!important;
+    background: white!important;
+}
+table tr td:nth-child(1){
+    font-weight: 700;
+    font-size: 1.1em;
+}
+.title{
+    font-weight: 600;
+    font-size: 1.4em;
+    font-family: 'Gill Sans Ultra Bold Condensed';
+}
+.overview{
+    font-weight: normal;
+    font-size: 1em;
 }

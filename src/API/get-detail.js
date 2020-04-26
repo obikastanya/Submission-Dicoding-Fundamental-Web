@@ -30,7 +30,7 @@ function notFound() {
         text-align:center;
     }
     .span-not-found{
-        padding-top: 100px;
+        padding: 150px 0px 300px 0px;
         margin:auto!important;
     }
     </style>`;
@@ -54,10 +54,13 @@ function cetakDetail(details) {
 }
     .card-body{
     overflow: hidden;
-    height: 250px;
+    height: 100px;
     font-size: 0.75em;
-    text-align: justify;
+    text-align: center;
     padding: 5%;
+    background-color: #011627;
+    color:  #ffbe0b ;
+    border-radius: 0px 0px 5px 5px;
         }
         .col-sm-3{
             padding: 0px;
@@ -65,7 +68,6 @@ function cetakDetail(details) {
         </style>
     `;
     for (detail of details) {
-        // console.log(detail.original_title);
         let image = '';
         if (detail.poster_path) {
             image = `${baseURLImage}${detail.poster_path}`
@@ -96,7 +98,9 @@ function getGenre(genre_ids) {
                 for (genreid of genre_ids) {
                     if (genreid == genre.id) {
                         // genreMovie.push(genre.name);
-                        genreMovie.innerHTML += `<li> ${genre.name} </li>`;
+                        genreMovie.innerHTML += `
+                        
+                        <li> ${genre.name} </li>`;
                     }
                 }
             }
@@ -114,6 +118,9 @@ function detailMovie(detail) {
     for (card of cards) {
         card.addEventListener('click', event => {
             content.innerHTML = `<style>
+            .jumbotron{
+                background-color: white;
+            }
             .container{
                 display: flex;
                 flex-direction: row;
@@ -145,15 +152,15 @@ function detailMovie(detail) {
                         <tbody>
                         <tr>
                             <td>Title  </td>
-                            <td><strong> ${detil.original_title}</strong></td>
+                            <td class="title"> ${detil.original_title}</td>
                         </tr>
                         <tr>
                             <td>Popularity  </td>
-                            <td>${detil.popularity}</td>
+                            <td><span class="badge badge-primary">${detil.popularity}</span></td>
                         </tr>
                         <tr>
-                            <td>Vote Count  </td>
-                            <td>${detil.vote_count}</td>
+                            <td>Total Vote </td>
+                            <td><span class="badge badge-warning">${detil.vote_count}</span></td>
                         </tr>
                         <tr>
                             <td>Genre  </td>
@@ -161,7 +168,7 @@ function detailMovie(detail) {
                         </tr >
                             <tr>
                                 <td>Release Date  </td>
-                                <td>${detil.release_date}</td>
+                                <td><span class="badge badge-success">${detil.release_date}</span></td>
                             </tr>
                         <tr>
                             <td>Overview </td>
@@ -179,8 +186,6 @@ function detailMovie(detail) {
                     getGenre(detil.genre_ids);
                 }
             }
-            // end logic
-
         });
     }
 }

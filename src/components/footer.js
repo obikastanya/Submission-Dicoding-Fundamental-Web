@@ -7,10 +7,15 @@ class Footer extends HTMLElement {
             height: 10em;
             padding: 2% 2% 2% 5%;
             background-color: #011627;
-            color: white;
+            color:  #ffbe0b ;
         }
         .foot p{
             font-size: 0.8em;
+        }
+        .foot p:hover, .foot h1:hover{
+            color: white;
+            transition: 0.3s;
+            cursor: default;
         }
 
         </style>
