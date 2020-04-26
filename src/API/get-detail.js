@@ -125,6 +125,7 @@ function detailMovie(detail) {
                 display: flex;
                 flex-direction: row;
             }
+            
             .section1{
                 flex-basis: 60%;
             }
