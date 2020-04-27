@@ -91,14 +91,21 @@ function detailMovie(detail) {
             // logic, get id movies
             let imgSelected = event.target;
             imgSelected = imgSelected.alt;
+            let image = ``;
             for (detil of detail) {
                 if (detil.id == imgSelected) {
+                    if (detil.poster_path) {
+                        image = `${baseURLImage}${detil.poster_path}`
+                    }
+                    else {
+                        image = `./src/img/NoLogo.jpg`;
+                    }
                     content.innerHTML += `
                 <div class="col-sm-12">
                 <div class="jumbotron jumbotron-fluid">
                 <div class="container">
                 <section class="section1">
-                    <img src="${baseURLImage}${detil.poster_path}" alt="${detil.id}"/>
+                    <img class="imgdetil" src="${image}" alt="${detil.id}"/>
                 </section>
                 <section class="section2">
                         <table class="table table-borderless">

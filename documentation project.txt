@@ -6,5 +6,10 @@
 6. add css and style loader
 7. install popper.js, bootstrap, and jquery
 6. Add API for searching
-
-
+7. code, add responsive, styling, etc.
+8. optimize : 
+    - split componenet css dan regular css. 
+    - restructuring function 
+    - refactoring function detail.
+9. add webpack-bundle-analyzer 
+10. add font loader

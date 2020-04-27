@@ -15,9 +15,15 @@ module.exports = {
                 },
                 {
                     loader: "css-loader"
-                }]
-            }
-
+                }],
+            },
+            {
+                test: /\.(woff|woff2|ttf|otf)$/,
+                use:
+                {
+                    loader: 'file-loader'
+                }
+            },
         ]
     }
 }

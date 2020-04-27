@@ -9,7 +9,7 @@ searchSubmit.addEventListener('click', () => {
             })
             .then(responJson => {
                 if (responJson.results.length > 0) {
-                    cetakDetail(responJson.results);
+                    cariMovie(responJson.results);
                     detailMovie(responJson.results);
                 }
                 else {
@@ -40,7 +40,7 @@ function notFound() {
         </span>
     `;
 }
-function cetakDetail(details) {
+function cariMovie(foundMovies) {
     const baseURLImage = `https://image.tmdb.org/t/p/w500/`;
     content.innerHTML = `
 <style> 
@@ -67,20 +67,20 @@ function cetakDetail(details) {
        }
         </style>
     `;
-    for (detail of details) {
+    for (foundMovie of foundMovies) {
         let image = '';
-        if (detail.poster_path) {
-            image = `${baseURLImage}${detail.poster_path}`
+        if (foundMovie.poster_path) {
+            image = `${baseURLImage}${foundMovie.poster_path}`
         }
         else {
-            image = `./src/img/No_Logo.jpg`
+            image = `./src/img/NoLogo.jpg`;
         }
         content.innerHTML += `
         <div class="col-sm-3">
         <div class="card" style="width:100%">
-            <img class="image-card" src="${image}" alt="${detail.id}"/>
+            <img class="image-card" src="${image}" alt="${foundMovie.id}"/>
             <div class="card-body">
-            <h5 class="card-title">${detail.original_title}</h5>
+            <h5 class="card-title">${foundMovie.original_title}</h5>
             </div>
             </div>
         </div>
@@ -139,14 +139,21 @@ function detailMovie(detail) {
             // logic, get id and genre movies
             let imgSelected = event.target;
             imgSelected = imgSelected.alt;
+            let image = ``;
             for (detil of detail) {
                 if (detil.id == imgSelected) {
+                    if (detil.poster_path) {
+                        image = `${baseURLImage}${detil.poster_path}`
+                    }
+                    else {
+                        image = `./src/img/NoLogo.jpg`;
+                    }
                     content.innerHTML += `
                 <div class="col-sm-12">
                     <div class="jumbotron jumbotron-fluid">
                     <div class="container">
                 <section class="section1">
-                    <img src="${baseURLImage}${detil.poster_path}" alt="${detil.id}"/>
+                    <img class="imgdetil" src="${image}" alt="${detil.id}"/>
                 </section>
                 <section class="section2">
                         <table class="table table-borderless">

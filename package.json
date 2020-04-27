@@ -11,8 +11,11 @@
   "license": "ISC",
   "devDependencies": {
     "css-loader": "^3.5.2",
+    "duplicate-dependencies-webpack-plugin": "^0.2.0",
     "exports-loader": "^0.7.0",
+    "file-loader": "^6.0.0",
     "style-loader": "^1.1.4",
+    "url-loader": "^4.1.0",
     "webpack": "^4.42.1",
     "webpack-cli": "^3.3.11",
     "webpack-dev-server": "^3.10.3",
